@@ -56,9 +56,9 @@ class EnumComparable(Enum):
             # try_str will contain all alpha numeric chars containd in str_chars
             # all other chars are ignored includeing whitespace
             try_str = "".join(re.findall("[a-zA-Z0-9]+", str_chars))
-            if hasattr(self, try_str):
+            if hasattr(self.__class__, try_str):
                 try:
-                    obj = getattr(self, try_str)
+                    obj = getattr(self.__class__, try_str)
                     return obj
                 except Exception as ex:
                     raise ex
