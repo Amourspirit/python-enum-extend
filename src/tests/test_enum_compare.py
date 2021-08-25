@@ -8,6 +8,8 @@ if __name__ == "__main__":
     pytest.main([__file__])
 from enum_extend import EnumComparable, AutoEnum
 
+class DummyClass(object):
+    '''Dummy class'''
 
 class EnumTest(EnumComparable):
     NONE = 0
@@ -35,6 +37,7 @@ def test_equal():
     e_first = EnumTest.FOURTH
     e_second = EnumTest.FOURTH
     assert e_first == e_second
+    assert (e_first == DummyClass()) == False
 
 
 def test_equal_num():
@@ -58,6 +61,8 @@ def test_equal_str():
     assert e_first == e_second
     e_first = EnumTest.FIRST
     e_second = "FIRST"
+    assert e_first == "EnumTest.FIRST"
+    assert e_first == "  < EnumTest.FIRST ) "
     assert e_first == e_second
     e_first = EnumTest.THIRD
     e_second = "THIRD"
@@ -74,6 +79,9 @@ def test_not_equal():
     e_first = EnumTest.FIRST
     e_second = EnumTest.SECOND
     assert e_first != e_second
+    assert e_first != "first"
+    assert e_first != "FIRSt"
+    assert e_first != "EnumTest.FIRSt"
     e_first = EnumTest.THIRD
     e_second = EnumTest.FOURTH
     assert e_first != e_second
@@ -86,6 +94,7 @@ def test_not_equal():
     e_first = EnumTest.NONE
     e_second = AutoEnum
     assert e_first != e_second
+    assert e_first != DummyClass()
 
 
 def test_less_than(enum_names):
@@ -108,6 +117,8 @@ def test_less_than(enum_names):
         assert EnumTest.FIRST < enum_names[i]
     with pytest.raises(ValueError):
         EnumTest.NONE < 'nosense'
+    with pytest.raises(TypeError):
+        EnumTest.FIRST < DummyClass()
 
 
 def test_less_than_or_equal(enum_names):
@@ -146,6 +157,8 @@ def test_less_than_or_equal(enum_names):
         assert EnumTest.FIRST <= enum_names[i]
     with pytest.raises(ValueError):
         EnumTest.NONE <= 'nosense'
+    with pytest.raises(TypeError):
+        EnumTest.FIRST <= DummyClass()
 
 
 def test_greater_than(enum_names):
@@ -170,6 +183,8 @@ def test_greater_than(enum_names):
         assert EnumTest.FOURTH > enum_names[i]
     with pytest.raises(ValueError):
         EnumTest.NONE > 'nosense'
+    with pytest.raises(TypeError):
+        EnumTest.FIRST > DummyClass()
 
 
 def test_greater_than_or_equal(enum_names):
@@ -201,6 +216,8 @@ def test_greater_than_or_equal(enum_names):
         assert EnumTest.FOURTH >= enum_names[i]
     with pytest.raises(ValueError):
         EnumTest.NONE >= 'nosense'
+    with pytest.raises(TypeError):
+        EnumTest.FIRST >= DummyClass()
 
 
 def test_add():
