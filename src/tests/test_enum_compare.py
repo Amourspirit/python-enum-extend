@@ -269,6 +269,11 @@ def test_add():
     with pytest.raises(ValueError):
         e_obj = EnumTest.NONE + 5
 
+    with pytest.raises(ValueError):
+        e_obj = EnumTest.SECOND
+        e_obj += EnumTest.THIRD
+
+
 
 def test_sub():
     e_obj = EnumTest.THIRD - EnumTest.SECOND
@@ -304,7 +309,10 @@ def test_sub():
 
     with pytest.raises(ValueError):
         e_obj = EnumTest.FIRST - 'FOURTH'
-
+    
+    with pytest.raises(ValueError):
+        e_obj = EnumTest.SECOND
+        e_obj -= EnumTest.THIRD
 
 def test_hash():
     hash_none = EnumTest.NONE.__hash__()

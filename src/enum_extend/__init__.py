@@ -150,11 +150,14 @@ class EnumComparable(Enum):
                 obj = self.__class__(new_val)
                 return obj
         except ValueError as ex:
-            msg = "Number '{0}' can not be converted into '{1}'".format(
-                new_val, self.__class__.__name__)
+            msg = "'{0}.{1}' with a value of '{2}' can not be added to '{3}'".format(
+                other.__class__.__name__,
+                other.name,
+                other.value,
+                self.__class__.__name__)
+            msg = msg + "\nAttempt to add is out of range for '{0}'".format(
+                self.__class__.__name__)
             raise ValueError(msg) from ex
-        except Exception:
-            pass
         try:
             if isinstance(other, numbers.Real):
                 new_val = self.value + other
@@ -191,11 +194,14 @@ class EnumComparable(Enum):
                 obj = self.__class__(new_val)
                 return obj
         except ValueError as ex:
-            msg = "Number '{0}' can not be converted into '{1}'".format(
-                new_val, self.__class__.__name__)
+            msg = "'{0}.{1}' with a value of '{2}' can not be subtracted from '{3}'".format(
+                other.__class__.__name__,
+                other.name,
+                other.value,
+                self.__class__.__name__)
+            msg = msg + "\nAttempt to subtract is out of range for '{0}'".format(
+                self.__class__.__name__)
             raise ValueError(msg) from ex
-        except Exception:
-            pass
         try:
             if isinstance(other, numbers.Real):
                 new_val = self.value - other
