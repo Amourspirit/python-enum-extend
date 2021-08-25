@@ -75,8 +75,6 @@ class EnumComparable(Enum):
                 return self.value > obj.value
         except ValueError as ex:
             raise ex
-        except Exception:
-            pass
         return NotImplemented
 
     def __lt__(self, other: 'EnumComparable'):
@@ -92,8 +90,6 @@ class EnumComparable(Enum):
                 return self.value < obj.value
         except ValueError as ex:
             raise ex
-        except Exception:
-            pass
         return NotImplemented
 
     def __ge__(self, other: 'EnumComparable'):
@@ -111,8 +107,6 @@ class EnumComparable(Enum):
                 return self.value >= obj.value
         except ValueError as ex:
             raise ex
-        except Exception:
-            pass
         return NotImplemented
 
     def __le__(self, other: 'EnumComparable'):
@@ -130,8 +124,6 @@ class EnumComparable(Enum):
                 return self.value <= obj.value
         except ValueError as ex:
             raise ex
-        except Exception:
-            pass
         return NotImplemented
 
     def __eq__(self, other: 'EnumComparable'):
@@ -145,90 +137,103 @@ class EnumComparable(Enum):
             return self.value == other
         try:
             if isinstance(other, str):
-                return self.name == other
-        except:
-            pass
+                obj = self.__str_to_enum_comparable(other)
+                return self.value == obj.value
+        except ValueError:
+            return False
         return NotImplemented
 
     def __add__(self, other: 'EnumComparable'):
-        try:
-            if isinstance(other, EnumComparable):
+        if isinstance(other, EnumComparable):
+            try:
                 new_val = self.value + other.value
                 obj = self.__class__(new_val)
                 return obj
-        except ValueError as ex:
-            msg = "Number '{0}' can not be converted into '{1}'".format(
-                new_val, self.__class__.__name__)
-            raise ValueError(msg) from ex
-        except Exception:
-            pass
-        try:
-            if isinstance(other, numbers.Real):
+            except ValueError as ex:
+                msg = "'{0}.{1}' with a value of '{2}' can not be added to '{3}'".format(
+                    other.__class__.__name__,
+                    other.name,
+                    other.value,
+                    self.__class__.__name__)
+                msg = msg + "\nAttempt to add is out of range for '{0}'".format(
+                    self.__class__.__name__)
+                raise ValueError(msg) from ex
+        
+        if isinstance(other, numbers.Real):
+            try:
                 new_val = self.value + other
                 obj = self.__class__(new_val)
                 return obj
-        except ValueError as ex:
-            msg = "Number '{0}' can not be converted into '{1}'".format(
-                new_val, self.__class__.__name__)
-            raise ValueError(msg) from ex
-        except Exception:
-            pass
-        try:
-            if isinstance(other, str):
+            except ValueError as ex:
+                msg = "Number '{0}' can not be converted into '{1}'".format(
+                    new_val, self.__class__.__name__)
+                raise ValueError(msg) from ex
+        if isinstance(other, str):
+            try:
                 other_enum = self.__str_to_enum_comparable(other)
                 new_val = self.value + other_enum.value
                 obj = self.__class__(new_val)
                 return obj
-        except ValueError as ex:
-            ex_msg = str(ex)
-            if ex_msg.endswith("'{0}'".format(self.__class__.__name__)):
-                raise ex
-            else:
-                msg = "Adding '{0}' to current instance can not be converted into '{1}'".format(
-                    other, self.__class__.__name__)
-                raise ValueError(msg)
-        except Exception:
+            except ValueError as ex:
+                ex_msg = str(ex)
+                if ex_msg.endswith("'{0}'".format(self.__class__.__name__)):
+                    raise ex
+                else:
+                    msg = "Adding '{0}' to current instance can not be converted into '{1}'".format(
+                        other, self.__class__.__name__)
+                    raise ValueError(msg)
+        try:
+            new_val = self.value + other.value
+            obj = self.__class__(new_val)
+            return obj
+        except:
             pass
         return NotImplemented
 
     def __sub__(self, other: 'EnumComparable'):
-        try:
-            if isinstance(other, EnumComparable):
+        if isinstance(other, EnumComparable):
+            try:
+                
                 new_val = self.value - other.value
                 obj = self.__class__(new_val)
                 return obj
-        except ValueError as ex:
-            msg = "Number '{0}' can not be converted into '{1}'".format(
-                new_val, self.__class__.__name__)
-            raise ValueError(msg) from ex
-        except Exception:
-            pass
-        try:
-            if isinstance(other, numbers.Real):
+            except ValueError as ex:
+                msg = "'{0}.{1}' with a value of '{2}' can not be subtracted from '{3}'".format(
+                    other.__class__.__name__,
+                    other.name,
+                    other.value,
+                    self.__class__.__name__)
+                msg = msg + "\nAttempt to subtract is out of range for '{0}'".format(
+                    self.__class__.__name__)
+                raise ValueError(msg) from ex
+        if isinstance(other, numbers.Real):
+            try:
                 new_val = self.value - other
                 obj = self.__class__(new_val)
                 return obj
-        except ValueError as ex:
-            msg = "Number '{0}' can not be converted into '{1}'".format(
-                new_val, self.__class__.__name__)
-            raise ValueError(msg) from ex
-        except Exception:
-            pass
-        try:
-            if isinstance(other, str):
+            except ValueError as ex:
+                msg = "Number '{0}' can not be converted into '{1}'".format(
+                    new_val, self.__class__.__name__)
+                raise ValueError(msg) from ex
+        if isinstance(other, str):
+            try:
                 other_enum = self.__str_to_enum_comparable(other)
                 new_val = self.value - other_enum.value
                 obj = self.__class__(new_val)
                 return obj
-        except ValueError as ex:
-            ex_msg = str(ex)
-            if ex_msg.endswith("'{0}'".format(self.__class__.__name__)):
-                raise ex
-            else:
-                msg = "Subtracting '{0}' from current instance can not be converted into '{1}'".format(
-                    other, self.__class__.__name__)
-                raise ValueError(msg)
-        except Exception:
+            except ValueError as ex:
+                ex_msg = str(ex)
+                if ex_msg.endswith("'{0}'".format(self.__class__.__name__)):
+                    raise ex
+                else:
+                    msg = "Subtracting '{0}' from current instance can not be converted into '{1}'".format(
+                        other, self.__class__.__name__)
+                    raise ValueError(msg)
+        try:
+            new_val = self.value - other.value
+            obj = self.__class__(new_val)
+            return obj
+        except:
             pass
         return NotImplemented
 

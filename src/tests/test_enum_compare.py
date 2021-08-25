@@ -1,5 +1,6 @@
 # coding: utf-8
 '''Test EnumComparable'''
+from enum import Enum
 import pytest
 if __name__ == "__main__":
     import sys
@@ -8,6 +9,15 @@ if __name__ == "__main__":
     pytest.main([__file__])
 from enum_extend import EnumComparable, AutoEnum
 
+class DummyClass(object):
+    '''Dummy class'''
+
+class NormalEnum(Enum):
+    NONE = 0
+    FIRST = 1
+    SECOND = 2
+    THIRD = 3
+    FOURTH = 4
 
 class EnumTest(EnumComparable):
     NONE = 0
@@ -21,6 +31,18 @@ class EnumTest(EnumComparable):
 def enum_names():
     return ('NONE', 'FIRST', 'SECOND', 'THIRD', 'FOURTH')
 
+def test_is():
+    e_obj = EnumTest.NONE
+    assert e_obj is EnumTest.NONE
+    e_obj = EnumTest.FIRST
+    assert e_obj is EnumTest.FIRST
+    e_obj = EnumTest.SECOND
+    assert e_obj is EnumTest.SECOND
+    e_obj = EnumTest.THIRD
+    assert e_obj is EnumTest.THIRD
+    e_obj = EnumTest.FOURTH
+    assert e_obj is EnumTest.FOURTH
+    assert (EnumTest.FIRST is NormalEnum.FIRST) == False
 
 def test_equal():
     e_first = EnumTest.NONE
@@ -35,6 +57,8 @@ def test_equal():
     e_first = EnumTest.FOURTH
     e_second = EnumTest.FOURTH
     assert e_first == e_second
+    assert (e_first == DummyClass()) == False
+    assert EnumTest.FIRST == NormalEnum.FIRST
 
 
 def test_equal_num():
@@ -58,6 +82,8 @@ def test_equal_str():
     assert e_first == e_second
     e_first = EnumTest.FIRST
     e_second = "FIRST"
+    assert e_first == "EnumTest.FIRST"
+    assert e_first == "  < EnumTest.FIRST ) "
     assert e_first == e_second
     e_first = EnumTest.THIRD
     e_second = "THIRD"
@@ -74,6 +100,9 @@ def test_not_equal():
     e_first = EnumTest.FIRST
     e_second = EnumTest.SECOND
     assert e_first != e_second
+    assert e_first != "first"
+    assert e_first != "FIRSt"
+    assert e_first != "EnumTest.FIRSt"
     e_first = EnumTest.THIRD
     e_second = EnumTest.FOURTH
     assert e_first != e_second
@@ -86,6 +115,7 @@ def test_not_equal():
     e_first = EnumTest.NONE
     e_second = AutoEnum
     assert e_first != e_second
+    assert e_first != DummyClass()
 
 
 def test_less_than(enum_names):
@@ -108,6 +138,8 @@ def test_less_than(enum_names):
         assert EnumTest.FIRST < enum_names[i]
     with pytest.raises(ValueError):
         EnumTest.NONE < 'nosense'
+    with pytest.raises(TypeError):
+        EnumTest.FIRST < DummyClass()
 
 
 def test_less_than_or_equal(enum_names):
@@ -146,6 +178,8 @@ def test_less_than_or_equal(enum_names):
         assert EnumTest.FIRST <= enum_names[i]
     with pytest.raises(ValueError):
         EnumTest.NONE <= 'nosense'
+    with pytest.raises(TypeError):
+        EnumTest.FIRST <= DummyClass()
 
 
 def test_greater_than(enum_names):
@@ -170,6 +204,8 @@ def test_greater_than(enum_names):
         assert EnumTest.FOURTH > enum_names[i]
     with pytest.raises(ValueError):
         EnumTest.NONE > 'nosense'
+    with pytest.raises(TypeError):
+        EnumTest.FIRST > DummyClass()
 
 
 def test_greater_than_or_equal(enum_names):
@@ -201,6 +237,8 @@ def test_greater_than_or_equal(enum_names):
         assert EnumTest.FOURTH >= enum_names[i]
     with pytest.raises(ValueError):
         EnumTest.NONE >= 'nosense'
+    with pytest.raises(TypeError):
+        EnumTest.FIRST >= DummyClass()
 
 
 def test_add():
@@ -223,6 +261,9 @@ def test_add():
     assert e_obj == EnumTest.FOURTH
 
     e_obj = EnumTest.FIRST + EnumTest.SECOND + EnumTest.FIRST
+    assert e_obj == EnumTest.FOURTH
+    
+    e_obj = EnumTest.FIRST + NormalEnum.SECOND + EnumTest.FIRST
     assert e_obj == EnumTest.FOURTH
 
     e_obj = EnumTest.SECOND + 1
@@ -252,10 +293,27 @@ def test_add():
     with pytest.raises(ValueError):
         e_obj = EnumTest.NONE + 5
 
+    with pytest.raises(ValueError):
+        e_obj = EnumTest.NONE + 2.8
+
+    with pytest.raises(ValueError):
+        e_obj = EnumTest.SECOND
+        e_obj += EnumTest.THIRD
+
+    with pytest.raises(TypeError):
+        e_obj = EnumTest.SECOND + DummyClass()
+
+
 
 def test_sub():
     e_obj = EnumTest.THIRD - EnumTest.SECOND
     assert e_obj == EnumTest.FIRST
+    
+    e_obj = EnumTest.THIRD - EnumTest.SECOND - EnumTest.FIRST
+    assert e_obj == EnumTest.NONE
+    
+    e_obj = EnumTest.THIRD - NormalEnum.SECOND - EnumTest.FIRST
+    assert e_obj == EnumTest.NONE
 
     e_obj = EnumTest.THIRD
     e_obj -= EnumTest.SECOND
@@ -287,7 +345,19 @@ def test_sub():
 
     with pytest.raises(ValueError):
         e_obj = EnumTest.FIRST - 'FOURTH'
+    
+    with pytest.raises(ValueError):
+        e_obj = EnumTest.SECOND
+        e_obj -= EnumTest.THIRD
 
+    with pytest.raises(ValueError):
+        e_obj = EnumTest.FOURTH - 10
+
+    with pytest.raises(ValueError):
+        e_obj = EnumTest.FOURTH - 3.99
+
+    with pytest.raises(TypeError):
+        e_obj = EnumTest.SECOND - DummyClass()
 
 def test_hash():
     hash_none = EnumTest.NONE.__hash__()
