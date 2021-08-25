@@ -67,16 +67,8 @@ class EnumComparable(Enum):
             return self.value > other.value
         except:
             pass
-        try:
-            if isinstance(other, numbers.Real):
-                obj = self.__class__(other)
-                return self.value > obj.value
-        except ValueError as ex:
-            msg = "Number '{0}' can not be converted into '{1}'".format(
-                other, self.__class__.__name__)
-            raise ValueError(msg) from ex
-        except Exception:
-            pass
+        if isinstance(other, numbers.Real):
+            return self.value > other
         try:
             if isinstance(other, str):
                 obj = self.__str_to_enum_comparable(other)
@@ -92,16 +84,8 @@ class EnumComparable(Enum):
             return self.value < other.value
         except:
             pass
-        try:
-            if isinstance(other, numbers.Real):
-                obj = self.__class__(other)
-                return self.value < obj.value
-        except ValueError as ex:
-            msg = "Number '{0}' can not be converted into '{1}'".format(
-                other, self.__class__.__name__)
-            raise ValueError(msg) from ex
-        except Exception:
-            pass
+        if isinstance(other, numbers.Real):
+            return self.value < other
         try:
             if isinstance(other, str):
                 obj = self.__str_to_enum_comparable(other)
@@ -117,16 +101,8 @@ class EnumComparable(Enum):
             return self.value >= other.value
         except:
             pass
-        try:
-            if isinstance(other, numbers.Real):
-                obj = self.__class__(other)
-                return self.value >= obj.value
-        except ValueError as ex:
-            msg = "Number '{0}' can not be converted into '{1}'".format(
-                other, self.__class__.__name__)
-            raise ValueError(msg) from ex
-        except Exception:
-            pass
+        if isinstance(other, numbers.Real):
+            return self.value >= other
         try:
             if isinstance(other, str):
                 if self.name == other:
@@ -144,16 +120,8 @@ class EnumComparable(Enum):
             return self.value <= other.value
         except:
             pass
-        try:
-            if isinstance(other, numbers.Real):
-                obj = self.__class__(other)
-                return self.value <= obj.value
-        except ValueError as ex:
-            msg = "Number '{0}' can not be converted into '{1}'".format(
-                other, self.__class__.__name__)
-            raise ValueError(msg) from ex
-        except Exception:
-            pass
+        if isinstance(other, numbers.Real):
+            return self.value <= other
         try:
             if isinstance(other, str):
                 if self.name == other:
@@ -173,9 +141,9 @@ class EnumComparable(Enum):
             return self.value == other.value
         except:
             pass
+        if isinstance(other, numbers.Real):
+            return self.value == other
         try:
-            if isinstance(other, numbers.Real):
-                return self.value == other
             if isinstance(other, str):
                 return self.name == other
         except:

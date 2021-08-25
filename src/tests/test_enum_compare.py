@@ -100,15 +100,12 @@ def test_less_than(enum_names):
     assert EnumTest.SECOND < EnumTest.FOURTH
     assert EnumTest.THIRD < EnumTest.FOURTH
     assert EnumTest.THIRD < 4
+    assert EnumTest.FOURTH < 5
+    assert (EnumTest.FOURTH < -1) == False
     for i in range(1, len(enum_names)):
         assert EnumTest.NONE < enum_names[i]
     for i in range(2, len(enum_names)):
         assert EnumTest.FIRST < enum_names[i]
-
-    with pytest.raises(ValueError):
-        EnumTest.FOURTH < 5
-    with pytest.raises(ValueError):
-        EnumTest.FOURTH < -1
     with pytest.raises(ValueError):
         EnumTest.NONE < 'nosense'
 
@@ -131,6 +128,9 @@ def test_less_than_or_equal(enum_names):
     assert EnumTest.FOURTH <= EnumTest.FOURTH
     assert EnumTest.THIRD <= 4
     assert EnumTest.FOURTH <= 4
+    assert EnumTest.FOURTH <= 5
+    assert EnumTest.FOURTH <= 333.444
+    assert (EnumTest.FOURTH <= -99.0098) == False
     for name in enum_names:
         assert EnumTest.NONE <= name
     for name in enum_names:
@@ -144,10 +144,6 @@ def test_less_than_or_equal(enum_names):
         assert EnumTest.NONE <= str_name
     for i in range(1, len(enum_names)):
         assert EnumTest.FIRST <= enum_names[i]
-    with pytest.raises(ValueError):
-        EnumTest.FOURTH <= 5
-    with pytest.raises(ValueError):
-        EnumTest.FOURTH <= -1
     with pytest.raises(ValueError):
         EnumTest.NONE <= 'nosense'
 
@@ -168,12 +164,10 @@ def test_greater_than(enum_names):
     assert EnumTest.FOURTH > 1
     assert EnumTest.FOURTH > 2
     assert EnumTest.FOURTH > 3
+    assert EnumTest.FOURTH > -1
+    assert (EnumTest.FOURTH > 10) == False
     for i in range(len(enum_names)-2, -1, -1):
         assert EnumTest.FOURTH > enum_names[i]
-    with pytest.raises(ValueError):
-        EnumTest.FOURTH > -1
-    with pytest.raises(ValueError):
-        EnumTest.FOURTH > -5
     with pytest.raises(ValueError):
         EnumTest.NONE > 'nosense'
 
@@ -200,12 +194,11 @@ def test_greater_than_or_equal(enum_names):
     assert EnumTest.FOURTH >= 2
     assert EnumTest.FOURTH >= 3
     assert EnumTest.FOURTH >= 4
+    assert EnumTest.FOURTH >= -1
+    assert EnumTest.FOURTH >= 2.1
+    assert (EnumTest.FOURTH >= 22.999) == False
     for i in range(len(enum_names)-1, -1, -1):
         assert EnumTest.FOURTH >= enum_names[i]
-    with pytest.raises(ValueError):
-        EnumTest.FOURTH >= -1
-    with pytest.raises(ValueError):
-        EnumTest.FOURTH >= -5
     with pytest.raises(ValueError):
         EnumTest.NONE >= 'nosense'
 
