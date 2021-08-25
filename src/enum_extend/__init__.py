@@ -229,6 +229,12 @@ class EnumComparable(Enum):
                     msg = "Subtracting '{0}' from current instance can not be converted into '{1}'".format(
                         other, self.__class__.__name__)
                     raise ValueError(msg)
+        try:
+            new_val = self.value - other.value
+            obj = self.__class__(new_val)
+            return obj
+        except:
+            pass
         return NotImplemented
 
     def __hash__(self):
