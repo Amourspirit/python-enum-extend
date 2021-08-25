@@ -1,5 +1,6 @@
 # coding: utf-8
 '''Test EnumComparable'''
+from enum import Enum
 import pytest
 if __name__ == "__main__":
     import sys
@@ -10,6 +11,13 @@ from enum_extend import EnumComparable, AutoEnum
 
 class DummyClass(object):
     '''Dummy class'''
+
+class NormalEnum(Enum):
+    NONE = 0
+    FIRST = 1
+    SECOND = 2
+    THIRD = 3
+    FOURTH = 4
 
 class EnumTest(EnumComparable):
     NONE = 0
@@ -23,6 +31,17 @@ class EnumTest(EnumComparable):
 def enum_names():
     return ('NONE', 'FIRST', 'SECOND', 'THIRD', 'FOURTH')
 
+def test_is():
+    t_enum = EnumTest.NONE
+    assert t_enum is EnumTest.NONE
+    t_enum = EnumTest.FIRST
+    assert t_enum is EnumTest.FIRST
+    t_enum = EnumTest.SECOND
+    assert t_enum is EnumTest.SECOND
+    t_enum = EnumTest.THIRD
+    assert t_enum is EnumTest.THIRD
+    t_enum = EnumTest.FOURTH
+    assert t_enum is EnumTest.FOURTH
 
 def test_equal():
     e_first = EnumTest.NONE
@@ -38,6 +57,7 @@ def test_equal():
     e_second = EnumTest.FOURTH
     assert e_first == e_second
     assert (e_first == DummyClass()) == False
+    assert EnumTest.FIRST == NormalEnum.FIRST
 
 
 def test_equal_num():
@@ -272,6 +292,8 @@ def test_add():
     with pytest.raises(ValueError):
         e_obj = EnumTest.SECOND
         e_obj += EnumTest.THIRD
+    with pytest.raises(TypeError):
+        e_obj = EnumTest.SECOND + DummyClass()
 
 
 
@@ -313,6 +335,9 @@ def test_sub():
     with pytest.raises(ValueError):
         e_obj = EnumTest.SECOND
         e_obj -= EnumTest.THIRD
+
+    with pytest.raises(TypeError):
+        e_obj = EnumTest.SECOND - DummyClass()
 
 def test_hash():
     hash_none = EnumTest.NONE.__hash__()
