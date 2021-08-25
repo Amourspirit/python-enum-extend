@@ -69,12 +69,12 @@ class EnumComparable(Enum):
             pass
         if isinstance(other, numbers.Real):
             return self.value > other
-        try:
-            if isinstance(other, str):
+        if isinstance(other, str):
+            try:
                 obj = self.__str_to_enum_comparable(other)
                 return self.value > obj.value
-        except ValueError as ex:
-            raise ex
+            except ValueError as ex:
+                raise ex
         return NotImplemented
 
     def __lt__(self, other: 'EnumComparable'):
@@ -84,12 +84,12 @@ class EnumComparable(Enum):
             pass
         if isinstance(other, numbers.Real):
             return self.value < other
-        try:
-            if isinstance(other, str):
+        if isinstance(other, str):
+            try:
                 obj = self.__str_to_enum_comparable(other)
                 return self.value < obj.value
-        except ValueError as ex:
-            raise ex
+            except ValueError as ex:
+                raise ex
         return NotImplemented
 
     def __ge__(self, other: 'EnumComparable'):
@@ -99,14 +99,14 @@ class EnumComparable(Enum):
             pass
         if isinstance(other, numbers.Real):
             return self.value >= other
-        try:
-            if isinstance(other, str):
+        if isinstance(other, str):
+            try:
                 if self.name == other:
                     return True
                 obj = self.__str_to_enum_comparable(other)
                 return self.value >= obj.value
-        except ValueError as ex:
-            raise ex
+            except ValueError as ex:
+                raise ex
         return NotImplemented
 
     def __le__(self, other: 'EnumComparable'):
@@ -116,14 +116,14 @@ class EnumComparable(Enum):
             pass
         if isinstance(other, numbers.Real):
             return self.value <= other
-        try:
-            if isinstance(other, str):
+        if isinstance(other, str):
+            try:
                 if self.name == other:
                     return True
                 obj = self.__str_to_enum_comparable(other)
                 return self.value <= obj.value
-        except ValueError as ex:
-            raise ex
+            except ValueError as ex:
+                raise ex
         return NotImplemented
 
     def __eq__(self, other: 'EnumComparable'):
@@ -135,12 +135,12 @@ class EnumComparable(Enum):
             pass
         if isinstance(other, numbers.Real):
             return self.value == other
-        try:
-            if isinstance(other, str):
+        if isinstance(other, str):
+            try:
                 obj = self.__str_to_enum_comparable(other)
                 return self.value == obj.value
-        except ValueError:
-            return False
+            except ValueError:
+                return False
         return NotImplemented
 
     def __add__(self, other: 'EnumComparable'):
