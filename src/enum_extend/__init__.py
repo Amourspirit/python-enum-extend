@@ -57,11 +57,7 @@ class EnumComparable(Enum):
             # all other chars are ignored includeing whitespace
             try_str = "".join(re.findall("[a-zA-Z0-9]+", str_chars))
             if hasattr(self.__class__, try_str):
-                try:
-                    obj = getattr(self.__class__, try_str)
-                    return obj
-                except Exception as ex:
-                    raise ex
+                return getattr(self.__class__, try_str)
         msg = "String '{0}' can not be converted into '{1}'".format(
             enum_str, self.__class__.__name__)
         raise ValueError(msg)
