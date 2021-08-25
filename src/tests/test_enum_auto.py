@@ -198,11 +198,6 @@ def test_04_doc_str():
 def test_auto_number_error():
     '''
     Test raises value error when a second item is added with a value less than previous items
-    ```
-    class EnumAutoError(AutoEnum):
-        FIRST = 'First value'
-        SECOND = (0, 'Second value')
-    ```
     '''
     with pytest.raises(ValueError):
         exec("""class EnumAutoError(AutoEnum):
@@ -210,6 +205,15 @@ def test_auto_number_error():
                     SECOND = (0, 'Second value')
                     """)
 
+def test_incorrect_params_error():
+    '''
+    Test raises type error incorrect number of params are added
+    '''
+    with pytest.raises(TypeError):
+        exec("""class EnumAutoError(AutoEnum):
+                    FIRST = 'First value'
+                    SECOND = (2, 'Second value', 0)
+                    """)
 
 def test_my_auto_enum():
     assert MyAutoEnum.FIRST.value == 1

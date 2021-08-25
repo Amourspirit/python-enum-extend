@@ -32,16 +32,17 @@ def enum_names():
     return ('NONE', 'FIRST', 'SECOND', 'THIRD', 'FOURTH')
 
 def test_is():
-    t_enum = EnumTest.NONE
-    assert t_enum is EnumTest.NONE
-    t_enum = EnumTest.FIRST
-    assert t_enum is EnumTest.FIRST
-    t_enum = EnumTest.SECOND
-    assert t_enum is EnumTest.SECOND
-    t_enum = EnumTest.THIRD
-    assert t_enum is EnumTest.THIRD
-    t_enum = EnumTest.FOURTH
-    assert t_enum is EnumTest.FOURTH
+    e_obj = EnumTest.NONE
+    assert e_obj is EnumTest.NONE
+    e_obj = EnumTest.FIRST
+    assert e_obj is EnumTest.FIRST
+    e_obj = EnumTest.SECOND
+    assert e_obj is EnumTest.SECOND
+    e_obj = EnumTest.THIRD
+    assert e_obj is EnumTest.THIRD
+    e_obj = EnumTest.FOURTH
+    assert e_obj is EnumTest.FOURTH
+    assert (EnumTest.FIRST is NormalEnum.FIRST) == False
 
 def test_equal():
     e_first = EnumTest.NONE
@@ -261,6 +262,9 @@ def test_add():
 
     e_obj = EnumTest.FIRST + EnumTest.SECOND + EnumTest.FIRST
     assert e_obj == EnumTest.FOURTH
+    
+    e_obj = EnumTest.FIRST + NormalEnum.SECOND + EnumTest.FIRST
+    assert e_obj == EnumTest.FOURTH
 
     e_obj = EnumTest.SECOND + 1
     assert e_obj == EnumTest.THIRD
@@ -290,8 +294,12 @@ def test_add():
         e_obj = EnumTest.NONE + 5
 
     with pytest.raises(ValueError):
+        e_obj = EnumTest.NONE + 2.8
+
+    with pytest.raises(ValueError):
         e_obj = EnumTest.SECOND
         e_obj += EnumTest.THIRD
+
     with pytest.raises(TypeError):
         e_obj = EnumTest.SECOND + DummyClass()
 
@@ -300,6 +308,12 @@ def test_add():
 def test_sub():
     e_obj = EnumTest.THIRD - EnumTest.SECOND
     assert e_obj == EnumTest.FIRST
+    
+    e_obj = EnumTest.THIRD - EnumTest.SECOND - EnumTest.FIRST
+    assert e_obj == EnumTest.NONE
+    
+    e_obj = EnumTest.THIRD - NormalEnum.SECOND - EnumTest.FIRST
+    assert e_obj == EnumTest.NONE
 
     e_obj = EnumTest.THIRD
     e_obj -= EnumTest.SECOND
@@ -335,6 +349,12 @@ def test_sub():
     with pytest.raises(ValueError):
         e_obj = EnumTest.SECOND
         e_obj -= EnumTest.THIRD
+
+    with pytest.raises(ValueError):
+        e_obj = EnumTest.FOURTH - 10
+
+    with pytest.raises(ValueError):
+        e_obj = EnumTest.FOURTH - 3.99
 
     with pytest.raises(TypeError):
         e_obj = EnumTest.SECOND - DummyClass()
