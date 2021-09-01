@@ -3,50 +3,19 @@ from enum import Enum
 import numbers
 import re
 
+__version__ = "0.1.0"
+
 # region class EnumComparable
 
 
 class EnumComparable(Enum):
     '''
     Base class for creation enums that can be compared.
-    Can be used with operators `==`, `!=`, `<`, `<=`, `>`, `>=`, `+`, `+=`, `-`, and `-=`.
+    Can be used with operators ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``, ``+``, ``+=``, ``-``, and ``-=``.
 
     Values on the right side of the operator can be other Enum, number, str.
 
-    @example:
-    ```
-    class MyEnum(EnumComparable):
-        NONE = 0
-        FIRST = 1
-        SECOND = 2
-        THIRD = 3
-        FOURTH = 4
-
-    print(MyEnum.NONE < MyEnum.First) # True
-    print(MyEnum.SECOND <= MyEnum.SECOND) # True
-    print(MyEnum.THIRD > MyEnum.THIRD) # False
-    print(MyEnum.NONE > MyEnum.THIRD) # False
-    print(MyEnum.NONE == MyEnum.THIRD) # False
-    print(MyEnum.NONE != MyEnum.THIRD) # True
-
-    my_enum = MyEnum.FIRST + MyEnum.THIRD
-    print(my_enum.value) # 4
-
-    my_enum = MyEnum.FIRST + MyEnum.FIRST + MyEnum.SECOND
-    print(my_enum.value) # 4
-
-    my_enum = MyEnum.FIRST + 3
-    print(my_enum.value) # 4
-
-    my_enum = MyEnum.FIRST + "THIRD"
-    print(my_enum.value) # 4
-
-    my_enum = MyEnum.FIRST + "< MyEnum.SECOND >  " + 1
-    print(my_enum.value) # 4
-
-    my_enum = MyEnum.SECOND - MyEnum.FIRST
-    print(my_enum.value) # 1
-    ```
+    .. include:: ../inc/enumcomparable/ex_basic.rst
     '''
     # Original: https://stackoverflow.com/questions/39268052/how-to-compare-enums-in-python
 
@@ -281,9 +250,9 @@ class AutoEnum(EnumComparable):
     """
     Automatically numbers enum members starting from 1.
 
-    `AutoEnum` inherits from `EnumComparable` and thus support all `EnumComparable` operations.
+    ``AutoEnum`` inherits from :doc:`../class/EnumComparable` and thus support all `EnumComparable` operations.
 
-    Can be used with operators `==`, `!=`, `<`, `<=`, `>`, `>=`, `+`, `+=`, `-`, and `-=`.
+    Can be used with operators ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``, ``+``, ``+=``, ``-``, and ``-=``.
 
     Values on the right side of the operator can be other Enum, number, str.
 
@@ -301,77 +270,13 @@ class AutoEnum(EnumComparable):
 
         Second parameter is the doc string.
 
-    @example: simple auto-number, w/o docstring
-    ```
-    class MyAutoEnum(AutoEnum):
-        FIRST = ()
-        SECOND = ()
-        THIRD = ()
-        FOURTH = ()
+    .. include:: ../inc/autoenum/ex_simple_wo_docstr.rst
 
-    print(MyAutoEnum.FIRST.value) # 1
-    print(MyAutoEnum.SECOND.value) # 2
-    print(MyAutoEnum.THIRD.value) # 3
-    print(MyAutoEnum.FOURTH.value) # 4
-    ```
+    .. include:: ../inc/autoenum/ex_simple_docstr.rst
 
-    @example: simple doc string
+    .. include:: ../inc/autoenum/ex_one_param_auto_next.rst
 
-    ```
-    import inspect
-
-    class MyAutoEnum(AutoEnum):
-        FIRST = 'First value'
-        SECOND = 'Second value'
-        THIRD = 'Third value'
-        FOURTH = 'Fourth value'
-
-    print(MyAutoEnum.FIRST.value) # 1
-    print(MyAutoEnum.THIRD.value) # 3
-    print(inspect.getdoc(MyAutoEnum.FIRST)) # First value
-    print(MyAutoEnum.THIRD.__doc__) # Third value
-    ```
-
-    @example: One Parm to set only auto-number next sequence
-    ```
-    class OnlyAutoEnum(AutoEnum):
-        NEG = -999
-        LESS_NEG = ()
-        NONE = 0
-        FIRST = ()
-        SECOND = ()
-        TEN = 10
-        TEN_PLUS = ()
-        TWENTY = 20
-        TWENTY_PLUS = ()
-
-    print(OnlyAutoEnum.NEG.value) # -999
-    print(OnlyAutoEnum.LESS_NEG.value) # -998
-    print(OnlyAutoEnum.NONE.value) # 0
-    print(OnlyAutoEnum.SECOND.value) # 2
-    print(OnlyAutoEnum.TWENTY.value) # 20
-    print(OnlyAutoEnum.TEN_PLUS.value) # 11
-    print(OnlyAutoEnum.TEN_PLUS > OnlyAutoEnum.TEN) # True
-    ```
-
-    @example: Two Parameters
-    ```
-    class OthAutoEnum(AutoEnum):
-        NONE = (0, 'Represents that no value is set yet')
-        FIRST = 'First value'
-        SECOND = 'Second value'
-        TEN = (10, 'Represents 10')
-        TEN_PLUS = 'Represents above 10'
-        TWENTY = (20, 'Represents 20')
-        TWENTY_PLUS = 'Represents above 20'
-
-    print(OthAutoEnum.NONE.value) # 0
-    print(OthAutoEnum.SECOND.value) # 2
-    print(OthAutoEnum.TWENTY.value) # 20
-    print(OthAutoEnum.TEN_PLUS.value) # 11
-    print(OthAutoEnum.TEN_PLUS > OthAutoEnum.TEN) # True
-    print(OthAutoEnum.TWENTY.__doc__) # Represents 20
-    ```
+    .. include:: ../inc/autoenum/ex_two_param.rst
     """
     # Original: https://stackoverflow.com/questions/19330460/how-do-i-put-docstrings-on-enums
 
