@@ -18,7 +18,7 @@ Welcome to python-enum-extend's documentation!
    :caption: Examples
 
    example/ex
-
+   example/ex_code
 
 .. toctree::
    :maxdepth: 2
@@ -30,5 +30,3 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

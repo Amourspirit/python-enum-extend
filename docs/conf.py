@@ -17,24 +17,21 @@ sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.join(os.path.abspath('..'),'src'))
 from src.enum_extend import __version__
 from src.enum_extend import AutoEnum
-
-from enum import IntEnum
 from typing import Any, Optional
 from docutils.statemachine import StringList
-from sphinx.application import Sphinx
 from sphinx.ext.autodoc import ClassDocumenter, bool_option
 
-# -- Project information -----------------------------------------------------
+# region Project information -----------------------------------------------------
 
 project = 'python-enum-extend'
 copyright = '2021, :Barry-Thomas-Paul: Moss'
 author = ':Barry-Thomas-Paul: Moss'
+# endregion Project information
 
 # The full version, including alpha/beta/rc tags
 release = __version__
 
-
-# -- General configuration ---------------------------------------------------
+# region General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -65,8 +62,9 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-# region Custom Documenter
+# endregion General configuration
 
+# region AutoEnumDocumenter
 
 class AutoEnumDocumenter(ClassDocumenter):
     # https://www.sphinx-doc.org/en/master/development/tutorials/autodoc_ext.html
@@ -141,36 +139,8 @@ class AutoEnumDocumenter(ClassDocumenter):
                 self.add_line(u"\u007f", source_name)
                 self.indent = indent
 
-# endregion
-
-def skip(app, what, name, obj, would_skip, options):
-    # print('skip', what)
-    print("skip", name, would_skip)
-    if name == 'EX_ONE':
-        # print(obj)
-        return False
-    if name == "__init__":
-        return False
-    return would_skip
-
-def autodoc_process_docstring(app, what, name, obj, options, lines):
-    print('ds-what', what)
-    print("ds-name", name)
-    # print('ds-lines', lines)
-
-
-def autodoc_process_signature(app, what, name, obj, options, signature, return_annotation):
-    print('signature', what)
-    print('signature', name)
-    if name == 'ex.ExAutoEnum.EX_ONE':
-        print("obj", obj)
-        print("signature", signature)
-        print("return_annotation", return_annotation)
-        return ("yes","Hello W")
+# endregion AutoEnumDocumenter
 
 def setup(app):
     app.setup_extension('sphinx.ext.autodoc')  # Require autodoc extension
-    # app.connect("autodoc-skip-member", skip)
-    # app.connect("autodoc-process-docstring", autodoc_process_docstring)
-    # app.connect("autodoc-process-signature", autodoc_process_signature)
     app.add_autodocumenter(AutoEnumDocumenter)
