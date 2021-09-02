@@ -15,6 +15,13 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.join(os.path.abspath('..'),'src'))
 from src.enum_extend import __version__
+from src.enum_extend import AutoEnum
+
+from enum import IntEnum
+from typing import Any, Optional
+from docutils.statemachine import StringList
+from sphinx.application import Sphinx
+from sphinx.ext.autodoc import ClassDocumenter, bool_option
 
 # -- Project information -----------------------------------------------------
 
@@ -57,6 +64,52 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+# region Custom Documenter
+
+
+class AutoEnumDocumenter(ClassDocumenter):
+    # https://www.sphinx-doc.org/en/master/development/tutorials/autodoc_ext.html
+    objtype = 'autoenum'
+    directivetype = 'class'
+    priority = 10 + ClassDocumenter.priority
+    option_spec = dict(ClassDocumenter.option_spec)
+    option_spec['hex'] = bool_option
+
+    @classmethod
+    def can_document_member(cls,
+                            member: Any, membername: str,
+                            isattr: bool, parent: Any) -> bool:
+        return isinstance(member, AutoEnum)
+
+    def add_directive_header(self, sig: str) -> None:
+        super().add_directive_header(sig)
+        self.add_line('   :final:', self.get_sourcename())
+
+    def add_content(self,
+                    more_content: Optional[StringList],
+                    no_docstring: bool = False
+                    ) -> None:
+        print('add_content()')
+        super().add_content(more_content, no_docstring)
+
+        source_name = self.get_sourcename()
+        print('source_name', source_name)
+        enum_object: AutoEnum = self.object
+        use_hex = self.options.hex
+        self.add_line('', source_name)
+
+        for enum_value in enum_object:
+            the_value_name = enum_value.name
+            the_value_value = enum_value.value
+            if use_hex:
+                the_value_value = hex(the_value_value)
+
+            self.add_line(
+                f"**{the_value_name}**: {the_value_value}", source_name)
+            self.add_line('\nhello world', source_name)
+            self.add_line('', source_name)
+            
+# endregion
 
 def skip(app, what, name, obj, would_skip, options):
     # print('skip', what)
@@ -84,6 +137,8 @@ def autodoc_process_signature(app, what, name, obj, options, signature, return_a
         return ("yes","Hello W")
 
 def setup(app):
+    app.setup_extension('sphinx.ext.autodoc')  # Require autodoc extension
     # app.connect("autodoc-skip-member", skip)
-    app.connect("autodoc-process-docstring", autodoc_process_docstring)
+    # app.connect("autodoc-process-docstring", autodoc_process_docstring)
     # app.connect("autodoc-process-signature", autodoc_process_signature)
+    app.add_autodocumenter(AutoEnumDocumenter)
