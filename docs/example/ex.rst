@@ -1,4 +1,5 @@
 ``ExAutoEnum`` class
 ====================
-.. autoautoenum:: ex.ExAutoEnum
+.. auto_autoenum:: ex.ExAutoEnum
+    :noindex:
 
