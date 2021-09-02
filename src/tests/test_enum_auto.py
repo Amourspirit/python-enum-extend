@@ -6,7 +6,7 @@ if __name__ == "__main__":
     import os
     sys.path.append(os.path.realpath('..'))
     pytest.main([__file__])
-from enum_extend import EnumComparable, AutoEnum
+from enum_extend import AutoEnum
 import inspect
 
 # region Enums

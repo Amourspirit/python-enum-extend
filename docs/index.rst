@@ -13,6 +13,13 @@ Welcome to python-enum-extend's documentation!
    class/EnumComparable
    class/AutoEnum
 
+.. tocTree::
+   :maxdepth: 1
+   :caption: Examples
+
+   example/ex
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

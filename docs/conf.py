@@ -56,3 +56,34 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+
+def skip(app, what, name, obj, would_skip, options):
+    # print('skip', what)
+    print("skip", name, would_skip)
+    if name == 'EX_ONE':
+        # print(obj)
+        return False
+    if name == "__init__":
+        return False
+    return would_skip
+
+def autodoc_process_docstring(app, what, name, obj, options, lines):
+    print('ds-what', what)
+    print("ds-name", name)
+    # print('ds-lines', lines)
+
+
+def autodoc_process_signature(app, what, name, obj, options, signature, return_annotation):
+    print('signature', what)
+    print('signature', name)
+    if name == 'ex.ExAutoEnum.EX_ONE':
+        print("obj", obj)
+        print("signature", signature)
+        print("return_annotation", return_annotation)
+        return ("yes","Hello W")
+
+def setup(app):
+    # app.connect("autodoc-skip-member", skip)
+    app.connect("autodoc-process-docstring", autodoc_process_docstring)
+    # app.connect("autodoc-process-signature", autodoc_process_signature)
