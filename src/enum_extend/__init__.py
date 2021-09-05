@@ -19,7 +19,7 @@ class EnumComparable(Enum):
     '''
     # Original: https://stackoverflow.com/questions/39268052/how-to-compare-enums-in-python
 
-    def __str_to_enum_comparable(self, enum_str: str) -> 'EnumComparable':
+    def __str_to_enum_comparable__(self, enum_str: str) -> 'EnumComparable':
         str_lst = enum_str.split('.')
         for str_chars in str_lst:
             # try_str will contain all alpha numeric chars containd in str_chars
@@ -40,7 +40,7 @@ class EnumComparable(Enum):
             return self.value > other
         if isinstance(other, str):
             try:
-                obj = self.__str_to_enum_comparable(other)
+                obj = self.__str_to_enum_comparable__(other)
                 return self.value > obj.value
             except ValueError as ex:
                 raise ex
@@ -55,7 +55,7 @@ class EnumComparable(Enum):
             return self.value < other
         if isinstance(other, str):
             try:
-                obj = self.__str_to_enum_comparable(other)
+                obj = self.__str_to_enum_comparable__(other)
                 return self.value < obj.value
             except ValueError as ex:
                 raise ex
@@ -72,7 +72,7 @@ class EnumComparable(Enum):
             try:
                 if self.name == other:
                     return True
-                obj = self.__str_to_enum_comparable(other)
+                obj = self.__str_to_enum_comparable__(other)
                 return self.value >= obj.value
             except ValueError as ex:
                 raise ex
@@ -89,7 +89,7 @@ class EnumComparable(Enum):
             try:
                 if self.name == other:
                     return True
-                obj = self.__str_to_enum_comparable(other)
+                obj = self.__str_to_enum_comparable__(other)
                 return self.value <= obj.value
             except ValueError as ex:
                 raise ex
@@ -106,7 +106,7 @@ class EnumComparable(Enum):
             return self.value == other
         if isinstance(other, str):
             try:
-                obj = self.__str_to_enum_comparable(other)
+                obj = self.__str_to_enum_comparable__(other)
                 return self.value == obj.value
             except ValueError:
                 return False
@@ -139,7 +139,7 @@ class EnumComparable(Enum):
                 raise ValueError(msg) from ex
         if isinstance(other, str):
             try:
-                other_enum = self.__str_to_enum_comparable(other)
+                other_enum = self.__str_to_enum_comparable__(other)
                 new_val = self.value + other_enum.value
                 obj = self.__class__(new_val)
                 return obj
@@ -186,7 +186,7 @@ class EnumComparable(Enum):
                 raise ValueError(msg) from ex
         if isinstance(other, str):
             try:
-                other_enum = self.__str_to_enum_comparable(other)
+                other_enum = self.__str_to_enum_comparable__(other)
                 new_val = self.value - other_enum.value
                 obj = self.__class__(new_val)
                 return obj
