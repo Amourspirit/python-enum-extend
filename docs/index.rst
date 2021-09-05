@@ -3,8 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to python-enum-extend's documentation!
-==============================================
+Welcome to enum-extend's documentation!
+=======================================
+
+.. include:: inc/readme.rst
+
 
 .. tocTree::
    :maxdepth: 1
@@ -18,13 +21,12 @@ Welcome to python-enum-extend's documentation!
    :caption: Examples
 
    example/ex
+   example/ex_help
    example/ex_code
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
-
 
 Indices and tables
 ==================

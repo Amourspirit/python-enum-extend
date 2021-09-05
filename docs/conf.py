@@ -23,7 +23,7 @@ from sphinx.ext.autodoc import ClassDocumenter, bool_option
 
 # region Project information -----------------------------------------------------
 
-project = 'python-enum-extend'
+project = 'enum-extend'
 copyright = '2021, :Barry-Thomas-Paul: Moss'
 author = ':Barry-Thomas-Paul: Moss'
 # endregion Project information
