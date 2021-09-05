@@ -326,6 +326,7 @@ class AutoEnum(EnumComparable):
                 value = last_value + 1
         d_cls[l_key] = value
         self._value_ = value
+        self.__doc__ = ''
         if skip_doc_str is True:
             return None
         if args_len == 1 and isinstance(args[0], str):

@@ -12,7 +12,6 @@
 #
 import os
 import sys
-import hashlib
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.join(os.path.abspath('..'),'src'))
 from src.enum_extend import __version__
@@ -94,13 +93,7 @@ class AutoEnumDocumenter(ClassDocumenter):
         enum_object: AutoEnum = self.object
         use_hex = self.options.hex
         self.add_line('', source_name)
-        # capture the class doc string for comparsion.
-        # when no docstring is assigned to enum then enum
-        # objects default to the class docstring when calling the __doc__ method.
-        # for this reason a comparsion is done to ensure that
-        # the enum is using class docstring
-        class_doc_hash = hashlib.md5(
-            enum_object.__doc__.encode("utf-8")).hexdigest()
+
         indent_str = '    '
         for enum_value in enum_object:
             the_value_name = enum_value.name
@@ -110,30 +103,27 @@ class AutoEnumDocumenter(ClassDocumenter):
             if use_hex:
                 the_value_value = hex(the_value_value)
 
-            self.add_line(
-                f"**{the_value_name}**\= {the_value_value}", source_name)
-            # self.add_line('', source_name)
+            # self.add_line(f"**{the_value_name}**\= {the_value_value}", source_name)
+            self.add_line("**{}**\= {}".format(
+                the_value_name,
+                the_value_value
+                ), source_name)
             if the_docstring.strip():  # not a blank line
-                # capture hash of current docstring
-                enum_doc_hash = hashlib.md5(
-                    the_docstring.encode("utf-8")).hexdigest()
-                # make sure this is not the same docstring of the class
-                if class_doc_hash != enum_doc_hash:
-                    indent = self.indent
-                    self.indent = indent + indent_str
-                    docstrings = the_docstring.splitlines()
-                    for i, line in enumerate(self.process_doc([docstrings])):
-                        self.add_line(line, source_name, i)
-                    self.add_line('', source_name)
-                    self.indent = indent
-                    valid_docstring = True
-
+                indent = self.indent
+                self.indent = indent + indent_str
+                docstrings = the_docstring.splitlines()
+                for i, line in enumerate(self.process_doc([docstrings])):
+                    self.add_line(line, source_name, i)
+                self.add_line('', source_name)
+                self.indent = indent
+                valid_docstring = True
+            
             if not valid_docstring:
                 # this is a bit of hack
                 # when there is no enum doc string provided
-                # this section will inject a no printing character
+                # this section will inject a non printing character
                 # with an indent. This will result in the Name, Value having special formating applied
-                # as the cas when there is a doc string provided
+                # as the case when there is a doc string provided
                 indent = self.indent
                 self.indent = indent + indent_str
                 self.add_line(u"\u007f", source_name)
