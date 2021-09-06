@@ -19,4 +19,5 @@ jobs:
         pip install pytest
         pip install pytest-cov
     - name: Test with pytest
+      run: |
         pytest src/tests/*
