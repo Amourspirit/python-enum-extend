@@ -4,6 +4,10 @@
 
 Enum Extend classes.
 
+## Docs
+
+Read the docs [here](https://python-enum-extend.readthedocs.io/)
+
 ## EnumComparable
 
 EnumComparable class is designed for comparsion of Integer based enums.
