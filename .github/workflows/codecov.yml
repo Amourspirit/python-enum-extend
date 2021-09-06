@@ -19,6 +19,7 @@ jobs:
         pip install pytest
         pip install pytest-cov
     - name: Test with pytest
+      run: |
         pytest src/tests/* --cov
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
