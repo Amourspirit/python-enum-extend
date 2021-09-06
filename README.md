@@ -8,6 +8,14 @@ Enum Extend classes.
 
 Read the docs [here](https://python-enum-extend.readthedocs.io/)
 
+## Install
+
+### PIP
+
+```bash
+pip install enum-extend
+```
+
 ## EnumComparable
 
 EnumComparable class is designed for comparsion of Integer based enums.
