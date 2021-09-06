@@ -20,4 +20,4 @@ Allows child classes to be compared using the following comparsion operaters.
 
 AutoEnum class is a child class of EnumComparable.
 
-Allows child classed to be auto numbered with Docstring. See: Example.
+Allows child classed to be auto numbered with Docstring.
