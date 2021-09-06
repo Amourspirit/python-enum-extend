@@ -1,3 +1,8 @@
+coverage:
+  status:
+    patch:
+      default:
+        target: 100%
 comment:
   layout: "reach, diff, flags, files"
   behavior: default
@@ -6,6 +11,7 @@ comment:
   require_head: yes       # [yes :: must have a head report to post]
   branches:               # branch names that can post comment
     - "master"
+    - "develop"
 ignore:
   - "src/tests"  # ignore folders and all its contents
   - "cmd"
