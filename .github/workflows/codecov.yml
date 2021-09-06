@@ -19,9 +19,4 @@ jobs:
         pip install pytest
         pip install pytest-cov
     - name: Test with pytest
-        pytest src/tests/* --cov
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        flags: pytest
-        fail_ci_if_error: true
+        pytest src/tests/*
