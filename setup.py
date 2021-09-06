@@ -1,14 +1,13 @@
 import pathlib
 from setuptools import setup, find_packages
 
+from src.enum_extend import __version__
+
 MODULE_ROOT_NAME='enum_extend'
 PKG_NAME='enum-extend'
 SRC_DIR='src'
-MAJOR = 0
-MINOR = 1
-MICRO = 0
 ISRELEASED = True
-VERSION = "{0}.{1}.{2}".format(MAJOR,MINOR,MICRO)
+VERSION = __version__
 
 
 # The directory containing this file
