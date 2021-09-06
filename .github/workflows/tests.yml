@@ -1,11 +1,11 @@
-name: CodeCov
+name: "Tests Python 3.5 and up"
 on: push
 jobs:
   run:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9]
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -21,8 +21,8 @@ jobs:
     - name: Test with pytest
       run: |
         pytest src/tests/* --cov
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        flags: pytest
-        fail_ci_if_error: true
+    # - name: Upload coverage to Codecov
+    #   uses: codecov/codecov-action@v1
+    #   with:
+    #     flags: pytest
+    #     fail_ci_if_error: true
