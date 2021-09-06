@@ -12,6 +12,8 @@ sphinx:
    fail_on_warning: false
 
 formats: []
+python:
+   version: "3.9"
 
 conda:
   environment: environment.yml
