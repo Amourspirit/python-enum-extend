@@ -3,7 +3,7 @@ from enum import Enum
 import numbers
 import re
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 # region class EnumComparable
 
