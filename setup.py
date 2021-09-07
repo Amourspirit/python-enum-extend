@@ -30,7 +30,7 @@ setup(
     author_email='bigbytetech@gmail.com',
     license="MIT",
     # packages=[MODULE_ROOT_NAME],
-    packages=find_packages(where='src', exclude=('tests',)),
+    packages=find_packages(where='src', exclude=['tests', 'ex']),
     package_dir={'': 'src'},
     # py_modules=MODULES,
     keywords=['python', 'enum', 'autoenum', 'compare-enum', 'enum-compare', 'enum-docstring'],
