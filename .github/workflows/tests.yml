@@ -21,8 +21,8 @@ jobs:
     - name: Test with pytest
       run: |
         pytest src/tests/* --cov
-    # - name: Upload coverage to Codecov
-    #   uses: codecov/codecov-action@v1
-    #   with:
-    #     flags: pytest
-    #     fail_ci_if_error: true
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        flags: pytest
+        fail_ci_if_error: true
