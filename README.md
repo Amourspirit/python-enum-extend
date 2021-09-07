@@ -10,7 +10,17 @@ Read the docs [here](https://python-enum-extend.readthedocs.io/)
 
 ## Install
 
+### CONDA
+
+enum-extend on [Anaconda](https://anaconda.org/conda-forge/enum-extend)
+
+```bash
+conda install -c conda-forge enum-extend
+```
+
 ### PIP
+
+enum-extend on [PyPI](https://pypi.org/project/enum-extend/):
 
 ```bash
 pip install enum-extend

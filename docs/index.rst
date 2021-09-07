@@ -8,6 +8,11 @@ Welcome to enum-extend's documentation!
 
 .. include:: inc/readme.rst
 
+.. tocTree::
+   :maxdepth: 2
+   :caption: Installation
+
+   install/install
 
 .. tocTree::
    :maxdepth: 1
