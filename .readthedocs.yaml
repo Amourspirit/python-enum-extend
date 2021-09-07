@@ -13,7 +13,7 @@ sphinx:
 
 formats: []
 python:
-   version: "3.9"
+   version: "3.8"
 
 conda:
   environment: environment.yml
